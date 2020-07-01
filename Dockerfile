@@ -1,7 +1,5 @@
-FROM node:lts
-
-RUN npm install -g sql-formatter-plus
-
-ADD main.js /
-
-ENTRYPOINT ["node", "main.js"]
+FROM node:14
+COPY main.js package.json package-lock.json /src/
+WORKDIR /src
+RUN npm install
+ENTRYPOINT ["node", "/src/main.js"]
