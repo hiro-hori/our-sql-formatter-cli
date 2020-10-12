@@ -35,6 +35,10 @@ const replace_arguments = [
     // { before_pattern: new RegExp(`}}(?!${comment_str}\*\/)`, "g"), after_str: `}}${comment_str}*/` },
     { before_pattern: /{{/g, after_str: `/*${comment_str}{{` },
     { before_pattern: /}}/g, after_str: `}}${comment_str}*/` },
+    { before_pattern: /{%/g, after_str: `/*${comment_str}{%` },
+    { before_pattern: /%}/g, after_str: `%}${comment_str}*/` },
+    { before_pattern: /{#/g, after_str: `/*${comment_str}{#` },
+    { before_pattern: /#}/g, after_str: `#}${comment_str}*/` },
     // { before_pattern: /\${(.*?)}/g, after_str: "/*COMMENT${$1}COMMENT*/" }, // non-greedy
     // { before_pattern: /\${(.*)}/g, after_str: "comment$1comment" }, // greedy
     { before_pattern: /\${(.*?)}/g, after_str: `${comment_str2}$1${comment_str2}` }, // non-greedy
@@ -65,6 +69,10 @@ fs.writeFileSync(file_name, formatted_content);
 const replace_arguments2 = [
     { before_pattern: new RegExp(`/\\*${comment_str}{{`, "g"), after_str: "{{" },
     { before_pattern: new RegExp(`}}${comment_str}\\*/`, "g"), after_str: "}}" },
+    { before_pattern: new RegExp(`/\\*${comment_str}{%`, "g"), after_str: "{%" },
+    { before_pattern: new RegExp(`%}${comment_str}\\*/`, "g"), after_str: "%}" },
+    { before_pattern: new RegExp(`/\\*${comment_str}{#`, "g"), after_str: "{#" },
+    { before_pattern: new RegExp(`#}${comment_str}\\*/`, "g"), after_str: "#}" },
     { before_pattern: new RegExp(`${comment_str2}(.*?)${comment_str2}`, "g"), after_str: "${$1}" },
 ];
 const final_contents = modifyComment(formatted_content, replace_arguments2);
